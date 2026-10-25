@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>اختبار تفاعلي - Top Phonics Level 1</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=Comic+Neue:wght@700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(180deg, #bae6fd 0%, #e0f2fe 40%, #f0f9ff 100%);
+      min-height: 100vh;
+      user-select: none;
+      overflow-x: hidden;
+    }
+    .en-font {
+      font-family: 'Fredoka', 'Comic Neue', cursive, sans-serif;
+      direction: ltr;
+    }
+    .worksheet-card {
+      background: #ffffff;
+      border: 6px solid #7dd3fc;
+      border-radius: 32px;
+      box-shadow: 0 20px 50px rgba(2, 132, 199, 0.15);
+      position: relative;
+    }
+    .section-badge {
+      background: linear-gradient(135deg, #fde047 0%, #eab308 100%);
+      border: 3px solid #ca8a04;
+      transform: rotate(45deg);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+    .section-badge span {
+      transform: rotate(-45deg);
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: #ffffff;
+      text-shadow: 1px 1px 0 #854d0e, -1px -1px 0 #854d0e, 1px -1px 0 #854d0e, -1px 1px 0 #854d0e;
+    }
+    .section-header-pill {
+      background: linear-gradient(90deg, #fef08a 0%, #fde047 100%);
+      border-bottom: 5px solid #eab308;
+      border-radius: 999px;
+      padding: 6px 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title-en {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #1d4ed8;
+      text-shadow: 2px 2px 0 #ffffff;
+      letter-spacing: 0.5px;
+    }
+    .word-oval {
+      border-radius: 50%;
+      border: 3px solid #cbd5e1;
+      border-left: 6px solid #ec4899;
+      border-right: 6px solid #94a3b8;
+      background: #ffffff;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .word-oval:hover {
+      transform: scale(1.06);
+      box-shadow: 0 6px 15px rgba(236, 72, 153, 0.2);
+    }
+    .word-oval.selected {
+      border-color: #2563eb;
+      background: #eff6ff;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+      transform: scale(1.08);
+    }
+    .pic-node {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .pic-node:hover {
+      transform: scale(1.06);
+    }
+    .pic-node.selected {
+      box-shadow: 0 0 0 4px #2563eb;
+      background: #eff6ff;
+      transform: scale(1.08);
+    }
+    .anchor-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ec4899;
+      border: 3px solid #ffffff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .anchor-dot:hover, .anchor-dot.active {
+      transform: scale(1.35);
+      background: #2563eb;
+    }
+    .handwriting-lines {
+      background-image: linear-gradient(to bottom, transparent 0%, transparent 32%, #93c5fd 32%, #93c5fd 35%, transparent 35%, transparent 65%, #f87171 65%, #f87171 68%, transparent 68%, transparent 96%, #93c5fd 96%, #93c5fd 100%);
+    }
+    .letter-tile {
+      transition: all 0.15s ease;
+    }
+    .letter-tile:active {
+      transform: scale(0.92);
+    }
+    .star-bg {
+      background: #f3e8ff;
+      border: 2px solid #d8b4fe;
+      border-radius: 24px;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop {
+      animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+  </style>
+</head>
+<body class="py-6 px-3 md:px-8">
+
+  <!-- Top Controls & Score Bar -->
+  <div class="max-w-5xl mx-auto mb-5 flex flex-wrap items-center justify-between gap-4 bg-white/90 backdrop-blur border-2 border-sky-300 rounded-2xl p-4 shadow-md">
+    <div class="flex items-center gap-3">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-white text-2xl shadow">
+        🎓
+      </div>
+      <div>
+        <h1 class="text-lg md:text-xl font-extrabold text-slate-800">الاختبار التفاعلي - Top Phonics (Level 1)</h1>
+        <p class="text-xs md:text-sm text-slate-600">أجب عن الأسئلة الأربعة ثم اضغط على زر تصحيح الاختبار لمعرفة نتيجتك</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <div id="scoreBadge" class="hidden bg-emerald-100 border-2 border-emerald-400 text-emerald-800 px-4 py-1.5 rounded-xl font-extrabold text-base md:text-lg">
+        النتيجة: <span id="scoreValue">0</span> / 16
+      </div>
+      <button onclick="checkAllAnswers()" class="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold px-5 py-2.5 rounded-xl shadow-md hover:shadow-lg transition flex items-center gap-2 text-sm md:text-base">
+        <span>✅</span> تصحيح الاختبار
+      </button>
+      <button onclick="resetAll()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 text-sm md:text-base">
+        <span>🔄</span> إعادة
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Worksheet Container -->
+  <div class="max-w-5xl mx-auto worksheet-card p-4 sm:p-8 overflow-hidden">
+
+    <!-- Worksheet Header Banner -->
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 mb-6 border-b-4 border-dashed border-sky-200">
+      <div class="flex flex-col items-start en-font">
+        <div class="bg-pink-600 text-white font-bold px-4 py-1 rounded-t-xl rounded-br-xl text-sm tracking-wide shadow-sm -rotate-2">
+          level 1
+        </div>
+        <div class="bg-yellow-300 border-2 border-pink-500 px-5 py-1.5 rounded-xl shadow-sm -mt-1">
+          <span class="text-blue-700 font-extrabold text-xl tracking-wider">TOP PHONICS</span>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <div class="inline-block bg-pink-50 border-4 border-pink-200 px-8 py-2 rounded-full shadow-inner">
+          <h2 class="en-font text-4xl sm:text-5xl font-extrabold text-pink-700 tracking-wide" style="text-shadow: 2px 2px 0 #fbcfe8;">
+            Exercise
+          </h2>
+        </div>
+      </div>
+
+      <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl px-4 py-2 text-center">
+        <span class="text-xs font-bold text-sky-700 block">عائلة الكلمات</span>
+        <span class="en-font text-2xl font-extrabold text-pink-600">-at family</span>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- QUESTION 1: MATCH WITH ARROWS              -->
+    <!-- ========================================== -->
+    <section class="mb-12">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+        <div class="flex items-center gap-3" dir="ltr">
+          <div class="section-badge"><span>1</span></div>
+          <div class="section-header-pill">
+            <span class="section-title-en">Match:</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-bold text-sky-900 bg-sky-100 border border-sky-300 px-3 py-1.5 rounded-xl">
+            💡 السؤال الأول: اضغط على الكلمة ثم اضغط على الصورة المناسبة (أو اسحب بينهما) لرسم سهم التوصيل
+          </span>
+          <button onclick="clearArrows()" class="text-xs bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold px-3 py-1.5 rounded-xl transition">
+            مسح الأسهم 🗑️
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Matching Canvas Area -->
+      <div id="matchContainer" class="relative bg-gradient-to-b from-sky-50/60 to-white border-2 border-sky-100 rounded-3xl p-4 sm:p-6" dir="ltr">
+        
+        <!-- SVG Overlay for Arrows -->
+        <svg id="arrowSvg" class="absolute inset-0 w-full h-full pointer-events-none z-20" style="overflow: visible;">
+          <defs>
+            <marker id="arrowhead-blue" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+              <polygon points="0 0, 10 4, 0 8" fill="#2563eb" />
+            </marker>
+            <marker id="arrowhead-green" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+              <polygon points="0 0, 10 4, 0 8" fill="#16a34a" />
+            </marker>
+            <marker id="arrowhead-red" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+              <polygon points="0 0, 10 4, 0 8" fill="#dc2626" />
+            </marker>
+            <marker id="arrowhead-temp" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+              <polygon points="0 0, 10 4, 0 8" fill="#ec4899" />
+            </marker>
+          </defs>
+          <g id="arrowsLayer"></g>
+          <line id="tempArrow" x1="0" y1="0" x2="0" y2="0" stroke="#ec4899" stroke-width="4" stroke-dasharray="6,6" marker-end="url(#arrowhead-temp)" class="hidden" />
+        </svg>
+
+        <!-- 3-Column Match Layout (Left Pics | 2 Columns of Words | Right Pics) -->
+        <div class="grid grid-cols-3 gap-2 sm:gap-6 items-center relative z-10">
+
+          <!-- Left Column Pictures: hat, rat, sat -->
+          <div class="flex flex-col items-start gap-6 sm:gap-8">
+            <!-- Pic: hat -->
+            <div class="flex items-center gap-2 sm:gap-3">
+              <div id="pic-hat" data-pic="hat" onclick="handlePicClick('hat')" class="pic-node w-20 h-20 sm:w-28 sm:h-28 bg-white rounded-2xl border-2 border-pink-200 shadow-sm flex items-center justify-center p-2 relative">
+                <div id="svg-hat" class="w-full h-full"></div>
+              </div>
+              <div id="dot-pic-hat" data-type="pic" data-id="hat" class="anchor-dot" title="وصّل هنا"></div>
+            </div>
+
+            <!-- Pic: rat -->
+            <div class="flex items-center gap-2 sm:gap-3">
+              <div id="pic-rat" data-pic="rat" onclick="handlePicClick('rat')" class="pic-node w-20 h-20 sm:w-28 sm:h-28 bg-white rounded-2xl border-2 border-pink-200 shadow-sm flex items-center justify-center p-2 relative">
+                <div id="svg-rat" class="w-full h-full"></div>
+              </div>
+              <div id="dot-pic-rat" data-type="pic" data-id="rat" class="anchor-dot" title="وصّل هنا"></div>
+            </div>
+
+            <!-- Pic: sat -->
+            <div class="flex items-center gap-2 sm:gap-3">
+              <div id="pic-sat" data-pic="sat" onclick="handlePicClick('sat')" class="pic-node w-20 h-20 sm:w-28 sm:h-28 bg-white rounded-2xl border-2 border-pink-200 shadow-sm flex items-center justify-center p-2 relative">
+                <div id="svg-sat" class="w-full h-full"></div>
+              </div>
+              <div id="dot-pic-sat" data-type="pic" data-id="sat" class="anchor-dot" title="وصّل هنا"></div>
+            </div>
+          </div>
+
+          <!-- Center Words: 2 Columns (sat, hat, rat | cat, fat, bat) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 justify-items-center">
+            <!-- Left Word Sub-column -->
+            <div class="flex flex-col gap-6 sm:gap-10 items-center">
+              <!-- Word: sat -->
+              <div class="flex items-center gap-1.5 sm:gap-2">
+                <div id="dot-word-sat" data-type="word" data-id="sat" class="anchor-dot"></div>
+                <div id="word-sat" onclick="handleWordClick('sat')" class="word-oval w-20 h-14 sm:w-28 sm:h-16 flex items-center justify-center en-font text-2xl sm:text-3xl font-bold text-slate-900 shadow-sm">
+                  sat
+                </div>
+              </div>
+              <!-- Word: hat -->
+              <div class="flex items-center gap-1.5 sm:gap-2">
+                <div id="dot-word-hat" data-type="word" data-id="hat" class="anchor-dot"></div>
+                <div id="word-hat" onclick="handleWordClick('hat')" class="word-oval w-20 h-14 sm:w-28 sm:h-16 flex items-center justify-center en-font text-2xl sm:text-3xl font-bold text-slate-900 shadow-sm">
+                  hat
+                </div>
+              </div>
+              <!-- Word: rat -->
+              <div class="flex items-center gap-1.5 sm:gap-2">
+                <div id="dot-word-rat" data-type="word" data-id="rat" class="anchor-dot"></div>
+                <div id="word-rat" onclick="handleWordClick('rat')" class="word-oval w-20 h-14 sm:w-28 sm:h-16 flex items-center justify-center en-font text-2xl sm:text-3xl font-bold text-slate-900 shadow-sm">
+                  rat
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Word Sub-column -->
+            <div class="flex flex-col gap-6 sm:gap-10 items-center">
+              <!-- Word: cat -->
+              <div class="flex items-center gap-1.5 sm:gap-2">
+                <div id="word-cat" onclick="handleWordClick('cat')" class="word-oval w-20 h-14 sm:w-28 sm:h-16 flex items-center justify-center en-font text-2xl sm:text-3xl font-bold text-slate-900 shadow-sm">
+                  cat
+                </div>
+                <div id="dot-word-cat" data-type="word" data-id="cat" class="anchor-dot"></div>
+              </div>
+              <!-- Word: fat -->
+              <div class="flex items-center gap-1.5 sm:gap-2">
+                <div id="word-fat" onclick="handleWordClick('fat')" class="word-oval w-20 h-14 sm:w-28 sm:h-16 flex items-center justify-center en-font text-2xl sm:text-3xl font-bold text-slate-900 shadow-sm">
+                  fat
+                </div>
+                <div id="dot-word-fat" data-type="word" data-id="fat" class="anchor-dot"></div>
+              </div>
+              <!-- Word: bat -->
+              <div class="flex items-center gap-1.5 sm:gap-2">
+                <div id="word-bat" onclick="handleWordClick('bat')" class="word-oval w-20 h-14 sm:w-28 sm:h-16 flex items-center justify-center en-font text-2xl sm:text-3xl font-bold text-slate-900 shadow-sm">
+                  bat
+                </div>
+                <div id="dot-word-bat" data-type="word" data-id="bat" class="anchor-dot"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column Pictures: bat, cat, fat -->
+          <div class="flex flex-col items-end gap-6 sm:gap-8">
+            <!-- Pic: bat -->
+            <div class="flex items-center gap-2 sm:gap-3">
+              <div id="dot-pic-bat" data-type="pic" data-id="bat" class="anchor-dot" title="وصّل هنا"></div>
+              <div id="pic-bat" data-pic="bat" onclick="handlePicClick('bat')" class="pic-node w-20 h-20 sm:w-28 sm:h-28 bg-white rounded-2xl border-2 border-pink-200 shadow-sm flex items-center justify-center p-2 relative">
+                <div id="svg-bat" class="w-full h-full"></div>
+              </div>
+            </div>
+
+            <!-- Pic: cat -->
+            <div class="flex items-center gap-2 sm:gap-3">
+              <div id="dot-pic-cat" data-type="pic" data-id="cat" class="anchor-dot" title="وصّل هنا"></div>
+              <div id="pic-cat" data-pic="cat" onclick="handlePicClick('cat')" class="pic-node w-20 h-20 sm:w-28 sm:h-28 bg-white rounded-2xl border-2 border-pink-200 shadow-sm flex items-center justify-center p-2 relative">
+                <div id="svg-cat" class="w-full h-full"></div>
+              </div>
+            </div>
+
+            <!-- Pic: fat -->
+            <div class="flex items-center gap-2 sm:gap-3">
+              <div id="dot-pic-fat" data-type="pic" data-id="fat" class="anchor-dot" title="وصّل هنا"></div>
+              <div id="pic-fat" data-pic="fat" onclick="handlePicClick('fat')" class="pic-node w-20 h-20 sm:w-28 sm:h-28 bg-white rounded-2xl border-2 border-pink-200 shadow-sm flex items-center justify-center p-2 relative">
+                <div id="svg-fat" class="w-full h-full"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- QUESTION 2: REARRANGE                      -->
+    <!-- ========================================== -->
+    <section class="mb-12">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+        <div class="flex items-center gap-3" dir="ltr">
+          <div class="section-badge"><span>2</span></div>
+          <div class="section-header-pill">
+            <span class="section-title-en">Rearrange:</span>
+          </div>
+        </div>
+        <span class="text-sm font-bold text-sky-900 bg-sky-100 border border-sky-300 px-3 py-1.5 rounded-xl">
+          💡 السؤال الثاني: اضغط على الحروف بالترتيب الصحيح لتكوين الكلمة (الحرف الملون بالأزرق هو البداية)
+        </span>
+      </div>
+
+      <div id="rearrangeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" dir="ltr">
+        <!-- Populated dynamically by JS -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- QUESTION 3: SUPPLY THE MISSING LETTER      -->
+    <!-- ========================================== -->
+    <section class="mb-12">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+        <div class="flex items-center gap-3" dir="ltr">
+          <div class="section-badge"><span>3</span></div>
+          <div class="section-header-pill">
+            <span class="section-title-en">Supply the missing letter:</span>
+          </div>
+        </div>
+        <span class="text-sm font-bold text-sky-900 bg-sky-100 border border-sky-300 px-3 py-1.5 rounded-xl">
+          💡 السؤال الثالث: اكتب الحرف الناقص أو اختره من شريط الحروف أسفل كل كلمة
+        </span>
+      </div>
+
+      <div id="missingLetterGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" dir="ltr">
+        <!-- Populated dynamically by JS -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- QUESTION 4: LOOK AND COMPLETE WITH         -->
+    <!-- ========================================== -->
+    <section class="mb-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+        <div class="flex items-center gap-3" dir="ltr">
+          <div class="section-badge"><span>4</span></div>
+          <div class="section-header-pill">
+            <span class="section-title-en">Look and complete with:</span>
+          </div>
+        </div>
+        <span class="text-sm font-bold text-sky-900 bg-sky-100 border border-sky-300 px-3 py-1.5 rounded-xl">
+          💡 السؤال الرابع: اختر الكلمة من الصندوق الوردي ثم اضغط على الفراغ المناسب لوضعها فيه
+        </span>
+      </div>
+
+      <div class="bg-gradient-to-br from-pink-50/70 to-amber-50/50 border-2 border-pink-200 rounded-3xl p-5 sm:p-8" dir="ltr">
+        <!-- Word Box Pill -->
+        <div class="flex justify-center mb-8">
+          <div class="bg-pink-200/80 border-2 border-pink-400 rounded-full px-8 py-3 shadow-sm flex items-center gap-4 en-font text-2xl sm:text-3xl font-extrabold text-pink-700">
+            <span>(</span>
+            <button id="wb-cat" onclick="selectWordBank('cat')" draggable="true" ondragstart="dragWordBank(event, 'cat')" class="px-5 py-1.5 rounded-full bg-white hover:bg-pink-50 border-2 border-pink-400 shadow-sm transition transform hover:scale-105 cursor-pointer">
+              cat
+            </button>
+            <span>-</span>
+            <button id="wb-mat" onclick="selectWordBank('mat')" draggable="true" ondragstart="dragWordBank(event, 'mat')" class="px-5 py-1.5 rounded-full bg-white hover:bg-pink-50 border-2 border-pink-400 shadow-sm transition transform hover:scale-105 cursor-pointer">
+              mat
+            </button>
+            <span>)</span>
+          </div>
+        </div>
+
+        <!-- Sentence & Illustration -->
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 sm:gap-4 en-font text-2xl sm:text-4xl font-extrabold text-slate-900">
+            <!-- Pink Heart -->
+            <span class="text-pink-500 text-3xl sm:text-4xl">🩷</span>
+
+            <!-- Blank 1 -->
+            <div id="blank-1"
+                 onclick="fillBlank(1)"
+                 ondragover="event.preventDefault()"
+                 ondrop="dropWordBank(event, 1)"
+                 class="min-w-[130px] sm:min-w-[160px] h-14 sm:h-16 px-4 bg-white border-b-4 border-dotted border-slate-500 rounded-2xl shadow-inner flex items-center justify-center text-blue-700 cursor-pointer hover:bg-sky-50 transition">
+              <span id="blank-1-text" class="text-slate-300 text-xl sm:text-2xl">.................</span>
+            </div>
+
+            <span>Sat on a</span>
+
+            <!-- Blank 2 -->
+            <div id="blank-2"
+                 onclick="fillBlank(2)"
+                 ondragover="event.preventDefault()"
+                 ondrop="dropWordBank(event, 2)"
+                 class="min-w-[130px] sm:min-w-[160px] h-14 sm:h-16 px-4 bg-white border-b-4 border-dotted border-slate-500 rounded-2xl shadow-inner flex items-center justify-center text-blue-700 cursor-pointer hover:bg-sky-50 transition">
+              <span id="blank-2-text" class="text-slate-300 text-xl sm:text-2xl">.................</span>
+            </div>
+          </div>
+
+          <!-- Cat on a Mat Picture -->
+          <div class="w-36 h-36 sm:w-44 sm:h-44 rounded-2xl border-4 border-amber-400 bg-amber-100 shadow-md p-2 flex-shrink-0 relative">
+            <div id="svg-cat-on-mat" class="w-full h-full"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // =====================================================
+    // 1. CUSTOM CUTE SVG ILLUSTRATIONS (Matching Worksheet)
+    // =====================================================
+    const ILLUSTRATIONS = {
+      hat: `
+        <svg viewBox="0 0 120 120" class="w-full h-full">
+          <!-- Brim -->
+          <ellipse cx="60" cy="72" rx="52" ry="22" fill="#db2777" stroke="#831843" stroke-width="3.5" transform="rotate(-12 60 72)"/>
+          <!-- Crown -->
+          <path d="M28 65 C28 28, 85 22, 90 55 Z" fill="#ec4899" stroke="#831843" stroke-width="3.5"/>
+          <!-- Blue Ribbon -->
+          <path d="M29 61 Q60 66 89 52 L91 58 Q60 73 28 67 Z" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+          <!-- Bow -->
+          <polygon points="72,56 84,48 82,64" fill="#3b82f6" stroke="#1e3a8a" stroke-width="2"/>
+          <polygon points="72,56 60,52 64,66" fill="#3b82f6" stroke="#1e3a8a" stroke-width="2"/>
+          <circle cx="72" cy="57" r="4" fill="#60a5fa" stroke="#1e3a8a" stroke-width="2"/>
+        </svg>
+      `,
+      rat: `
+        <svg viewBox="0 0 120 120" class="w-full h-full">
+          <!-- Tail -->
+          <path d="M82 88 Q112 85 106 58" fill="none" stroke="#f472b6" stroke-width="5" stroke-linecap="round"/>
+          <!-- Ears -->
+          <circle cx="38" cy="34" r="16" fill="#64748b" stroke="#1e293b" stroke-width="3"/>
+          <circle cx="38" cy="34" r="10" fill="#f472b6"/>
+          <circle cx="76" cy="34" r="16" fill="#64748b" stroke="#1e293b" stroke-width="3"/>
+          <circle cx="76" cy="34" r="10" fill="#f472b6"/>
+          <!-- Body -->
+          <ellipse cx="62" cy="78" rx="24" ry="22" fill="#94a3b8" stroke="#1e293b" stroke-width="3"/>
+          <ellipse cx="60" cy="80" rx="14" ry="15" fill="#cbd5e1"/>
+          <!-- Head -->
+          <ellipse cx="56" cy="52" rx="22" ry="18" fill="#94a3b8" stroke="#1e293b" stroke-width="3"/>
+          <!-- Eyes -->
+          <circle cx="48" cy="48" r="3.5" fill="#0f172a"/>
+          <circle cx="62" cy="48" r="3.5" fill="#0f172a"/>
+          <!-- Nose -->
+          <circle cx="40" cy="56" r="4.5" fill="#ef4444"/>
+          <!-- Cheese -->
+          <polygon points="20,72 45,66 42,88 20,86" fill="#facc15" stroke="#ca8a04" stroke-width="2.5"/>
+          <circle cx="30" cy="78" r="3" fill="#eab308"/>
+          <circle cx="38" cy="74" r="2.5" fill="#eab308"/>
+        </svg>
+      `,
+      sat: `
+        <svg viewBox="0 0 120 120" class="w-full h-full">
+          <!-- Chair -->
+          <path d="M28 38 L28 98 M28 70 L64 70 L64 98" fill="none" stroke="#78350f" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Down Arrow -->
+          <path d="M46 20 L46 42 M40 36 L46 43 L52 36" fill="none" stroke="#eab308" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Boy Head -->
+          <circle cx="75" cy="32" r="13" fill="#fed7aa" stroke="#431407" stroke-width="2.5"/>
+          <path d="M63 28 Q75 14 88 28 Q82 22 63 28" fill="#1e293b"/>
+          <circle cx="79" cy="31" r="2" fill="#0f172a"/>
+          <!-- Torso (leaning/sitting) -->
+          <path d="M68 44 L54 68 L70 72 L78 46 Z" fill="#fef08a" stroke="#431407" stroke-width="2.5"/>
+          <!-- Legs sitting -->
+          <path d="M56 68 L82 68 L82 95" fill="none" stroke="#3b82f6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+          <ellipse cx="86" cy="96" rx="8" ry="4" fill="#ef4444" stroke="#431407" stroke-width="2"/>
+        </svg>
+      `,
+      bat: `
+        <svg viewBox="0 0 120 120" class="w-full h-full">
+          <!-- Yellow Glow -->
+          <ellipse cx="60" cy="60" rx="52" ry="34" fill="#fef08a" opacity="0.6"/>
+          <!-- Left Wing -->
+          <path d="M45 58 C25 32, 8 45, 10 68 C20 62, 28 68, 32 74 C38 66, 42 68, 45 66 Z" fill="#1e293b" stroke="#0f172a" stroke-width="2.5"/>
+          <!-- Right Wing -->
+          <path d="M75 58 C95 32, 112 45, 110 68 C100 62, 92 68, 88 74 C82 66, 78 68, 75 66 Z" fill="#1e293b" stroke="#0f172a" stroke-width="2.5"/>
+          <!-- Body & Head -->
+          <ellipse cx="60" cy="64" rx="18" ry="20" fill="#0f172a"/>
+          <!-- Ears -->
+          <polygon points="46,48 50,30 56,46" fill="#0f172a"/>
+          <polygon points="74,48 70,30 64,46" fill="#0f172a"/>
+          <!-- Eyes -->
+          <circle cx="53" cy="56" r="4.5" fill="#ffffff"/>
+          <circle cx="67" cy="56" r="4.5" fill="#ffffff"/>
+          <circle cx="53" cy="56" r="2" fill="#0f172a"/>
+          <circle cx="67" cy="56" r="2" fill="#0f172a"/>
+          <!-- Smile & Fangs -->
+          <path d="M50 66 Q60 74 70 66" fill="none" stroke="#ef4444" stroke-width="2.5"/>
+          <polygon points="53,67 55,73 57,68" fill="#ffffff"/>
+          <polygon points="63,68 65,73 67,67" fill="#ffffff"/>
+        </svg>
+      `,
+      cat: `
+        <svg viewBox="0 0 120 120" class="w-full h-full">
+          <!-- Tail -->
+          <path d="M86 85 Q108 75 102 52" fill="none" stroke="#f97316" stroke-width="9" stroke-linecap="round"/>
+          <!-- Body -->
+          <ellipse cx="62" cy="78" rx="28" ry="22" fill="#fb923c" stroke="#7c2d12" stroke-width="3"/>
+          <!-- Stripes on body -->
+          <path d="M72 62 Q78 72 74 82" fill="none" stroke="#9a3412" stroke-width="3" stroke-linecap="round"/>
+          <path d="M80 66 Q85 75 82 84" fill="none" stroke="#9a3412" stroke-width="3" stroke-linecap="round"/>
+          <!-- Head -->
+          <circle cx="48" cy="52" r="22" fill="#fb923c" stroke="#7c2d12" stroke-width="3"/>
+          <!-- Ears -->
+          <polygon points="30,38 32,18 44,32" fill="#fb923c" stroke="#7c2d12" stroke-width="3"/>
+          <polygon points="66,38 64,18 52,32" fill="#fb923c" stroke="#7c2d12" stroke-width="3"/>
+          <!-- Eyes -->
+          <ellipse cx="41" cy="48" rx="4" ry="5" fill="#fef08a" stroke="#7c2d12" stroke-width="1.5"/>
+          <ellipse cx="55" cy="48" rx="4" ry="5" fill="#fef08a" stroke="#7c2d12" stroke-width="1.5"/>
+          <circle cx="41" cy="48" r="2" fill="#0f172a"/>
+          <circle cx="55" cy="48" r="2" fill="#0f172a"/>
+          <!-- Nose & Whiskers -->
+          <polygon points="45,55 51,55 48,59" fill="#ec4899"/>
+          <path d="M48 59 Q43 64 38 60 M48 59 Q53 64 58 60" fill="none" stroke="#7c2d12" stroke-width="2" stroke-linecap="round"/>
+          <path d="M22 52 L34 55 M22 58 L34 58 M74 52 L62 55 M74 58 L62 58" stroke="#7c2d12" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      `,
+      fat: `
+        <svg viewBox="0 0 120 120" class="w-full h-full">
+          <!-- Legs -->
+          <rect x="44" y="86" width="12" height="20" rx="4" fill="#1e293b"/>
+          <rect x="64" y="86" width="12" height="20" rx="4" fill="#1e293b"/>
+          <!-- Arms -->
+          <ellipse cx="24" cy="64" rx="10" ry="7" fill="#fed7aa" stroke="#7c2d12" stroke-width="2.5" transform="rotate(-25 24 64)"/>
+          <ellipse cx="96" cy="64" rx="10" ry="7" fill="#fed7aa" stroke="#7c2d12" stroke-width="2.5" transform="rotate(25 96 64)"/>
+          <!-- Big Chubby Belly/Shirt -->
+          <ellipse cx="60" cy="68" rx="34" ry="26" fill="#ef4444" stroke="#7f1d1d" stroke-width="3"/>
+          <!-- Head -->
+          <circle cx="60" cy="34" r="18" fill="#fed7aa" stroke="#7c2d12" stroke-width="3"/>
+          <!-- Chubby Cheeks -->
+          <circle cx="48" cy="38" r="4" fill="#fca5a5"/>
+          <circle cx="72" cy="38" r="4" fill="#fca5a5"/>
+          <!-- Hair -->
+          <path d="M44 26 Q60 12 76 26 Q68 18 44 26" fill="#1e293b"/>
+          <!-- Eyes & Smile -->
+          <circle cx="54" cy="32" r="2.5" fill="#0f172a"/>
+          <circle cx="66" cy="32" r="2.5" fill="#0f172a"/>
+          <path d="M54 40 Q60 46 66 40" fill="none" stroke="#7c2d12" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      `,
+      mat: `
+        <svg viewBox="0 0 120 120" class="w-full h-full">
+          <!-- Perspective Rug/Mat -->
+          <polygon points="32,32 96,32 108,86 12,86" fill="#d97706" stroke="#451a03" stroke-width="3.5" stroke-linejoin="round"/>
+          <polygon points="36,38 92,38 100,78 20,78" fill="#92400e" stroke="#fde047" stroke-width="2"/>
+          <!-- Zigzag Pattern -->
+          <polyline points="26,58 38,48 50,58 62,48 74,58 86,48 94,58" fill="none" stroke="#fde047" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="24,68 38,58 50,68 62,58 74,68 86,58 96,68" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Fringes -->
+          <path d="M12 86 L8 92 M24 86 L21 92 M36 86 L34 92 M48 86 L47 92 M60 86 L60 92 M72 86 L73 92 M84 86 L86 92 M96 86 L99 92 M108 86 L112 92" stroke="#78350f" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      `,
+      pat: `
+        <svg viewBox="0 0 120 120" class="w-full h-full">
+          <!-- Ground Shadow -->
+          <ellipse cx="62" cy="104" rx="44" ry="7" fill="#e2e8f0"/>
+          <!-- Floating Red Heart -->
+          <path d="M92 34 C89 28, 81 30, 84 37 C86 42, 92 46, 92 46 C92 46, 98 42, 100 37 C103 30, 95 28, 92 34 Z" fill="#ef4444" stroke="#b91c1c" stroke-width="1.5"/>
+          <!-- Boy Kneeling Legs (Blue Pants) -->
+          <path d="M26 84 L54 84 C60 84, 62 98, 54 98 L24 98 C18 98, 18 84, 26 84 Z" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="2.5"/>
+          <ellipse cx="22" cy="94" rx="6" ry="5" fill="#9ca3af" stroke="#374151" stroke-width="2"/>
+          <!-- Boy Torso (Red T-Shirt) -->
+          <path d="M30 52 L58 52 L60 86 L28 86 Z" fill="#ef4444" stroke="#7f1d1d" stroke-width="2.5" stroke-linejoin="round"/>
+          <!-- Boy Head & Ears -->
+          <circle cx="30" cy="36" r="5" fill="#fed7aa" stroke="#431407" stroke-width="2"/>
+          <circle cx="46" cy="34" r="17" fill="#fed7aa" stroke="#431407" stroke-width="2.5"/>
+          <!-- Boy Hair -->
+          <path d="M29 32 C28 16, 62 14, 63 30 C58 24, 52 24, 46 26 C38 28, 33 26, 29 32 Z" fill="#27272a" stroke="#18181b" stroke-width="2"/>
+          <!-- Boy Happy Face (Closed smiling eyes & warm smile) -->
+          <path d="M41 33 Q44 30 47 33" fill="none" stroke="#431407" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M52 33 Q55 30 58 33" fill="none" stroke="#431407" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="39" cy="38" r="3" fill="#fca5a5" opacity="0.7"/>
+          <circle cx="59" cy="38" r="3" fill="#fca5a5" opacity="0.7"/>
+          <path d="M45 41 Q50 46 55 41" fill="none" stroke="#431407" stroke-width="2.2" stroke-linecap="round"/>
+          <!-- Cute Rat Sitting (Right Side) -->
+          <!-- Rat Pink Tail -->
+          <path d="M92 94 Q112 88 106 70" fill="none" stroke="#f472b6" stroke-width="4.5" stroke-linecap="round"/>
+          <!-- Rat Round Ears -->
+          <circle cx="65" cy="50" r="8.5" fill="#64748b" stroke="#1e293b" stroke-width="2.5"/>
+          <circle cx="65" cy="50" r="5" fill="#f472b6"/>
+          <circle cx="91" cy="50" r="8.5" fill="#64748b" stroke="#1e293b" stroke-width="2.5"/>
+          <circle cx="91" cy="50" r="5" fill="#f472b6"/>
+          <!-- Rat Body -->
+          <ellipse cx="82" cy="84" rx="15" ry="16" fill="#94a3b8" stroke="#1e293b" stroke-width="2.5"/>
+          <ellipse cx="78" cy="86" rx="8" ry="10" fill="#cbd5e1"/>
+          <!-- Rat Front Paws -->
+          <ellipse cx="74" cy="99" rx="5" ry="3.5" fill="#cbd5e1" stroke="#1e293b" stroke-width="2"/>
+          <ellipse cx="86" cy="99" rx="5" ry="3.5" fill="#cbd5e1" stroke="#1e293b" stroke-width="2"/>
+          <!-- Rat Head -->
+          <ellipse cx="78" cy="62" rx="14" ry="13" fill="#94a3b8" stroke="#1e293b" stroke-width="2.5"/>
+          <!-- Rat Happy Face (Closed eyes, round red nose, whiskers) -->
+          <path d="M71 59 Q74 56 77 59" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M80 59 Q83 56 86 59" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="78.5" cy="64" r="3.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.2"/>
+          <path d="M78.5 67.5 Q75 70 72 68 M78.5 67.5 Q82 70 85 68" fill="none" stroke="#1e293b" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M61 63 L69 64 M61 67 L69 66 M95 63 L87 64 M95 67 L87 66" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Boy's Hand Gently Patting Rat's Head -->
+          <path d="M50 56 Q63 42 75 46" fill="none" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>
+          <path d="M50 56 Q63 42 75 46" fill="none" stroke="#431407" stroke-width="2" stroke-linecap="round"/>
+          <ellipse cx="77" cy="46" rx="6" ry="4" fill="#fed7aa" stroke="#431407" stroke-width="2" transform="rotate(15 77 46)"/>
+          <!-- Patting Motion Lines -->
+          <path d="M74 35 Q78 33 82 35" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+          <path d="M72 31 Q78 28 84 31" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+          <!-- Boy's Other Arm Hugging/Resting -->
+          <path d="M36 60 Q48 70 64 68" fill="none" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>
+          <circle cx="65" cy="68" r="4" fill="#fed7aa" stroke="#431407" stroke-width="2"/>
+        </svg>
+      `,
+      catOnMat: `
+        <svg viewBox="0 0 140 140" class="w-full h-full">
+          <!-- Round Mat -->
+          <ellipse cx="70" cy="112" rx="58" ry="18" fill="#0284c7" stroke="#0369a1" stroke-width="3"/>
+          <ellipse cx="70" cy="112" rx="44" ry="12" fill="#38bdf8" stroke="#fde047" stroke-width="2.5" stroke-dasharray="6,4"/>
+          <!-- Sitting Orange Cat -->
+          <path d="M92 98 Q116 90 112 68" fill="none" stroke="#f97316" stroke-width="9" stroke-linecap="round"/>
+          <ellipse cx="70" cy="88" rx="24" ry="26" fill="#fb923c" stroke="#7c2d12" stroke-width="3"/>
+          <!-- Front Paws -->
+          <ellipse cx="58" cy="110" rx="8" ry="6" fill="#fdba74" stroke="#7c2d12" stroke-width="2.5"/>
+          <ellipse cx="82" cy="110" rx="8" ry="6" fill="#fdba74" stroke="#7c2d12" stroke-width="2.5"/>
+          <!-- Cat Head -->
+          <circle cx="70" cy="50" r="24" fill="#fb923c" stroke="#7c2d12" stroke-width="3"/>
+          <polygon points="48,36 50,14 64,28" fill="#fb923c" stroke="#7c2d12" stroke-width="3"/>
+          <polygon points="92,36 90,14 76,28" fill="#fb923c" stroke="#7c2d12" stroke-width="3"/>
+          <!-- Eyes & Nose -->
+          <circle cx="61" cy="48" r="3.5" fill="#0f172a"/>
+          <circle cx="79" cy="48" r="3.5" fill="#0f172a"/>
+          <polygon points="67,55 73,55 70,59" fill="#ec4899"/>
+          <path d="M70 59 Q64 64 59 60 M70 59 Q76 64 81 60" fill="none" stroke="#7c2d12" stroke-width="2" stroke-linecap="round"/>
+          <!-- Whiskers -->
+          <path d="M40 50 L52 53 M40 57 L52 57 M100 50 L88 53 M100 57 L88 57" stroke="#7c2d12" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      `
+    };
+
+    // =====================================================
+    // 2. AUDIO & SPEECH SYNTHESIS (DISABLED)
+    // =====================================================
+    function speakText() {
+      // تم إلغاء القراءة الصوتية بناءً على الطلب
+    }
+
+    function playTone() {
+      // تم إلغاء المؤثرات الصوتية بناءً على الطلب
+    }
+
+    // =====================================================
+    // 3. QUESTION 1: MATCHING WITH SVG ARROWS
+    // =====================================================
+    const MATCH_WORDS = ['sat', 'hat', 'rat', 'cat', 'fat', 'bat'];
+    let connections = {}; // { wordId: picId }
+    let selectedWord = null;
+    let selectedPic = null;
+    let dragSource = null; // { type: 'word' | 'pic', id: string }
+
+    function initMatchSection() {
+      // Populate SVG illustrations for Question 1
+      MATCH_WORDS.forEach(id => {
+        const container = document.getElementById(`svg-${id}`);
+        if (container && ILLUSTRATIONS[id]) {
+          container.innerHTML = ILLUSTRATIONS[id];
+        }
+      });
+
+      // Setup drag & click on anchor dots
+      const dots = document.querySelectorAll('.anchor-dot');
+      dots.forEach(dot => {
+        dot.addEventListener('mousedown', startDotDrag);
+        dot.addEventListener('touchstart', startDotDrag, { passive: false });
+        dot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const type = dot.getAttribute('data-type');
+          const id = dot.getAttribute('data-id');
+          if (type === 'word') handleWordClick(id);
+          else if (type === 'pic') handlePicClick(id);
+        });
+      });
+
+      window.addEventListener('mousemove', moveDotDrag);
+      window.addEventListener('touchmove', moveDotDrag, { passive: false });
+      window.addEventListener('mouseup', endDotDrag);
+      window.addEventListener('touchend', endDotDrag);
+      window.addEventListener('resize', () => renderArrows());
+    }
+
+    function getDotCenter(dotEl) {
+      const container = document.getElementById('matchContainer');
+      const cRect = container.getBoundingClientRect();
+      const dRect = dotEl.getBoundingClientRect();
+      return {
+        x: dRect.left - cRect.left + dRect.width / 2,
+        y: dRect.top - cRect.top + dRect.height / 2
+      };
+    }
+
+    function startDotDrag(e) {
+      e.preventDefault();
+      const dot = e.currentTarget;
+      const type = dot.getAttribute('data-type');
+      const id = dot.getAttribute('data-id');
+      dragSource = { type, id, dot };
+
+      const pos = getDotCenter(dot);
+      const tempArrow = document.getElementById('tempArrow');
+      tempArrow.setAttribute('x1', pos.x);
+      tempArrow.setAttribute('y1', pos.y);
+      tempArrow.setAttribute('x2', pos.x);
+      tempArrow.setAttribute('y2', pos.y);
+      tempArrow.classList.remove('hidden');
+    }
+
+    function moveDotDrag(e) {
+      if (!dragSource) return;
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const container = document.getElementById('matchContainer');
+      const cRect = container.getBoundingClientRect();
+
+      const tempArrow = document.getElementById('tempArrow');
+      tempArrow.setAttribute('x2', clientX - cRect.left);
+      tempArrow.setAttribute('y2', clientY - cRect.top);
+    }
+
+    function endDotDrag(e) {
+      if (!dragSource) return;
+      const tempArrow = document.getElementById('tempArrow');
+      tempArrow.classList.add('hidden');
+
+      const clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+      const clientY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+      const targetEl = document.elementFromPoint(clientX, clientY);
+
+      if (targetEl) {
+        const dotEl = targetEl.closest('.anchor-dot');
+        const picCard = targetEl.closest('[data-pic]');
+        const wordCard = targetEl.closest('.word-oval');
+
+        if (dragSource.type === 'word') {
+          if (dotEl && dotEl.getAttribute('data-type') === 'pic') {
+            createConnection(dragSource.id, dotEl.getAttribute('data-id'));
+          } else if (picCard) {
+            createConnection(dragSource.id, picCard.getAttribute('data-pic'));
+          }
+        } else if (dragSource.type === 'pic') {
+          if (dotEl && dotEl.getAttribute('data-type') === 'word') {
+            createConnection(dotEl.getAttribute('data-id'), dragSource.id);
+          } else if (wordCard) {
+            const wId = wordCard.id.replace('word-', '');
+            createConnection(wId, dragSource.id);
+          }
+        }
+      }
+
+      dragSource = null;
+    }
+
+    function updateSelectionUI() {
+      MATCH_WORDS.forEach(id => {
+        const wEl = document.getElementById(`word-${id}`);
+        const pEl = document.getElementById(`pic-${id}`);
+        const wDot = document.getElementById(`dot-word-${id}`);
+        const pDot = document.getElementById(`dot-pic-${id}`);
+
+        if (wEl) wEl.classList.toggle('selected', selectedWord === id);
+        if (pEl) pEl.classList.toggle('selected', selectedPic === id);
+        if (wDot) wDot.classList.toggle('active', selectedWord === id);
+        if (pDot) pDot.classList.toggle('active', selectedPic === id);
+      });
+    }
+
+    function handleWordClick(wordId) {
+      if (selectedPic) {
+        createConnection(wordId, selectedPic);
+        selectedWord = null;
+        selectedPic = null;
+      } else {
+        selectedWord = (selectedWord === wordId) ? null : wordId;
+      }
+      updateSelectionUI();
+    }
+
+    function handlePicClick(picId) {
+      if (selectedWord) {
+        createConnection(selectedWord, picId);
+        selectedWord = null;
+        selectedPic = null;
+      } else {
+        selectedPic = (selectedPic === picId) ? null : picId;
+      }
+      updateSelectionUI();
+    }
+
+    function createConnection(wordId, picId) {
+      // Remove any existing connection to the same picture so it stays 1-to-1
+      Object.keys(connections).forEach(w => {
+        if (connections[w] === picId) {
+          delete connections[w];
+        }
+      });
+      connections[wordId] = picId;
+      renderArrows(false);
+    }
+
+    function clearArrows() {
+      connections = {};
+      selectedWord = null;
+      selectedPic = null;
+      updateSelectionUI();
+      renderArrows(false);
+    }
+
+    function renderArrows(showValidation = false) {
+      const layer = document.getElementById('arrowsLayer');
+      if (!layer) return;
+      layer.innerHTML = '';
+
+      Object.entries(connections).forEach(([wordId, picId]) => {
+        const wDot = document.getElementById(`dot-word-${wordId}`);
+        const pDot = document.getElementById(`dot-pic-${picId}`);
+        if (!wDot || !pDot) return;
+
+        const start = getDotCenter(wDot);
+        const end = getDotCenter(pDot);
+
+        let strokeColor = '#2563eb';
+        let marker = 'url(#arrowhead-blue)';
+
+        if (showValidation) {
+          if (wordId === picId) {
+            strokeColor = '#16a34a';
+            marker = 'url(#arrowhead-green)';
+          } else {
+            strokeColor = '#dc2626';
+            marker = 'url(#arrowhead-red)';
+          }
+        }
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', start.x);
+        line.setAttribute('y1', start.y);
+        line.setAttribute('x2', end.x);
+        line.setAttribute('y2', end.y);
+        line.setAttribute('stroke', strokeColor);
+        line.setAttribute('stroke-width', '4');
+        line.setAttribute('stroke-linecap', 'round');
+        line.setAttribute('marker-end', marker);
+
+        layer.appendChild(line);
+      });
+    }
+
+    // =====================================================
+    // 4. QUESTION 2: REARRANGE
+    // =====================================================
+    const REARRANGE_ITEMS = [
+      { id: 'cat', letters: ['a', 'c', 't'], blueLetter: 'c', target: 'cat' },
+      { id: 'hat', letters: ['t', 'h', 'a'], blueLetter: 'h', target: 'hat' },
+      { id: 'fat', letters: ['a', 't', 'f'], blueLetter: 'f', target: 'fat' },
+      { id: 'rat', letters: ['r', 't', 'a'], blueLetter: 'r', target: 'rat' }
+    ];
+
+    let rearrangeState = {
+      cat: [],
+      hat: [],
+      fat: [],
+      rat: []
+    };
+
+    function renderRearrangeSection() {
+      const grid = document.getElementById('rearrangeGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      REARRANGE_ITEMS.forEach(item => {
+        const chosenIndices = rearrangeState[item.id];
+        const formedWord = chosenIndices.map(idx => item.letters[idx]).join('');
+
+        const card = document.createElement('div');
+        card.id = `rearrange-card-${item.id}`;
+        card.className = 'bg-pink-50/70 border-2 border-pink-200 rounded-3xl p-4 flex flex-col items-center shadow-sm transition';
+
+        // Picture Circle
+        const picHtml = `
+          <div class="w-28 h-28 rounded-full bg-white border-4 border-pink-200 shadow-sm p-2 mb-3 relative">
+            ${ILLUSTRATIONS[item.id]}
+          </div>
+        `;
+
+        // Letter Buttons (e.g., a - c - t)
+        const lettersHtml = item.letters.map((char, idx) => {
+          const isUsed = chosenIndices.includes(idx);
+          const isBlue = char === item.blueLetter;
+          return `
+            <button
+              onclick="pickRearrangeLetter('${item.id}', ${idx})"
+              ${isUsed ? 'disabled' : ''}
+              class="letter-tile w-11 h-11 rounded-xl font-extrabold en-font text-2xl border-2 shadow-sm flex items-center justify-center transition
+              ${isUsed ? 'bg-slate-200 border-slate-300 text-slate-400 opacity-40 cursor-not-allowed' : 'bg-white hover:bg-sky-50 border-pink-300 cursor-pointer'}
+              ${isBlue && !isUsed ? 'text-blue-600 ring-2 ring-blue-200' : (!isUsed ? 'text-slate-900' : '')}">
+              ${char}
+            </button>
+            ${idx < item.letters.length - 1 ? '<span class="font-bold text-slate-400 text-xl">-</span>' : ''}
+          `;
+        }).join('');
+
+        // Answer Box with Dotted Line
+        const answerHtml = `
+          <div class="w-full mt-3 bg-white border-2 border-pink-300 rounded-2xl px-3 py-2 flex items-center justify-between shadow-inner">
+            <div onclick="popRearrangeLetter('${item.id}')" class="flex-1 text-center en-font text-3xl font-extrabold tracking-widest text-blue-700 border-b-2 border-dotted border-slate-500 min-h-[38px] cursor-pointer" title="اضغط للتراجع عن آخر حرف">
+              ${formedWord || '<span class="text-slate-300 text-lg tracking-normal">...................</span>'}
+            </div>
+            <button onclick="clearRearrangeItem('${item.id}')" class="text-slate-400 hover:text-rose-600 text-sm px-1.5" title="مسح">
+              ✖
+            </button>
+          </div>
+        `;
+
+        card.innerHTML = `
+          ${picHtml}
+          <div class="flex items-center justify-center gap-1.5 my-1">
+            ${lettersHtml}
+          </div>
+          ${answerHtml}
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    function pickRearrangeLetter(itemId, idx) {
+      if (rearrangeState[itemId].length < 3 && !rearrangeState[itemId].includes(idx)) {
+        rearrangeState[itemId].push(idx);
+        playTone('pop');
+        renderRearrangeSection();
+
+        if (rearrangeState[itemId].length === 3) {
+          const item = REARRANGE_ITEMS.find(i => i.id === itemId);
+          const word = rearrangeState[itemId].map(i => item.letters[i]).join('');
+          speakText(word);
+        }
+      }
+    }
+
+    function popRearrangeLetter(itemId) {
+      if (rearrangeState[itemId].length > 0) {
+        rearrangeState[itemId].pop();
+        playTone('pop');
+        renderRearrangeSection();
+      }
+    }
+
+    function clearRearrangeItem(itemId) {
+      rearrangeState[itemId] = [];
+      renderRearrangeSection();
+    }
+
+    // =====================================================
+    // 5. QUESTION 3: SUPPLY THE MISSING LETTER
+    // =====================================================
+    const MISSING_ITEMS = [
+      { id: 'cat', answer: 'c', accepted: ['c'], word: 'cat' },
+      { id: 'mat', answer: 'm', accepted: ['m'], word: 'mat' },
+      { id: 'sat', answer: 's', accepted: ['s'], word: 'sat' },
+      { id: 'pat', answer: 'p', accepted: ['p', 'r'], word: 'pat' }
+    ];
+
+    const QUICK_LETTERS = ['c', 'm', 's', 'p', 'b', 'h', 'f', 'r'];
+
+    let missingState = {
+      cat: '',
+      mat: '',
+      sat: '',
+      pat: ''
+    };
+
+    function renderMissingSection() {
+      const grid = document.getElementById('missingLetterGrid');
+      grid.innerHTML = '';
+
+      MISSING_ITEMS.forEach(item => {
+        const val = missingState[item.id];
+        const card = document.createElement('div');
+        card.id = `missing-card-${item.id}`;
+        card.className = 'star-bg p-4 flex flex-col items-center shadow-sm transition';
+
+        const quickButtons = QUICK_LETTERS.map(letter => `
+          <button
+            onclick="setMissingLetter('${item.id}', '${letter}')"
+            class="w-9 h-9 rounded-xl en-font font-extrabold text-lg border-2 shadow-sm transition flex items-center justify-center
+            ${val.toLowerCase() === letter ? 'bg-blue-600 text-white border-blue-700' : 'bg-white hover:bg-amber-100 text-slate-800 border-slate-300'}">
+            ${letter}
+          </button>
+        `).join('');
+
+        card.innerHTML = `
+          <div class="w-28 h-28 bg-white rounded-2xl border-2 border-purple-200 p-2 mb-3 shadow-sm relative">
+            ${ILLUSTRATIONS[item.id]}
+          </div>
+
+          <div class="w-full bg-lime-100/90 border-2 border-lime-300 rounded-full px-5 py-2 flex items-center justify-center gap-1 en-font text-3xl font-extrabold text-slate-900 handwriting-lines shadow-inner">
+            <input
+              id="missing-input-${item.id}"
+              type="text"
+              maxlength="1"
+              value="${val}"
+              oninput="handleMissingInput('${item.id}', this.value)"
+              placeholder="_"
+              class="w-10 h-10 text-center bg-white/90 border-b-4 border-slate-800 rounded-lg text-blue-700 font-extrabold focus:outline-none focus:ring-2 focus:ring-blue-400 lowercase"
+            />
+            <span>a t</span>
+          </div>
+
+          <!-- Quick Letter Picker for Touchscreens -->
+          <div class="flex flex-wrap justify-center gap-1.5 mt-3">
+            ${quickButtons}
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    function handleMissingInput(id, value) {
+      const clean = value.replace(/[^a-zA-Z]/g, '').toLowerCase();
+      missingState[id] = clean;
+      if (clean) {
+        playTone('pop');
+        speakText(clean + 'at');
+      }
+      renderMissingSection();
+    }
+
+    function setMissingLetter(id, letter) {
+      missingState[id] = letter;
+      playTone('pop');
+      speakText(letter + 'at');
+      renderMissingSection();
+    }
+
+    // =====================================================
+    // 6. QUESTION 4: LOOK AND COMPLETE WITH WORD BOX
+    // =====================================================
+    let activeBankWord = null;
+    let blankState = {
+      1: '',
+      2: ''
+    };
+
+    function selectWordBank(word) {
+      speakText(word);
+      playTone('pop');
+      activeBankWord = word;
+
+      document.getElementById('wb-cat').classList.remove('ring-4', 'ring-blue-400', 'bg-blue-50');
+      document.getElementById('wb-mat').classList.remove('ring-4', 'ring-blue-400', 'bg-blue-50');
+      document.getElementById(`wb-${word}`).classList.add('ring-4', 'ring-blue-400', 'bg-blue-50');
+
+      // If one blank is still empty and user double-taps or clicks a word, guide them visually
+      document.getElementById('blank-1').classList.add('ring-2', 'ring-pink-300');
+      document.getElementById('blank-2').classList.add('ring-2', 'ring-pink-300');
+    }
+
+    function fillBlank(slot) {
+      if (activeBankWord) {
+        blankState[slot] = activeBankWord;
+        activeBankWord = null;
+        document.getElementById('wb-cat').classList.remove('ring-4', 'ring-blue-400', 'bg-blue-50');
+        document.getElementById('wb-mat').classList.remove('ring-4', 'ring-blue-400', 'bg-blue-50');
+        document.getElementById('blank-1').classList.remove('ring-2', 'ring-pink-300');
+        document.getElementById('blank-2').classList.remove('ring-2', 'ring-pink-300');
+      } else {
+        // Toggle between cat -> mat -> empty on direct click for super easy interaction
+        if (blankState[slot] === '') blankState[slot] = 'cat';
+        else if (blankState[slot] === 'cat') blankState[slot] = 'mat';
+        else blankState[slot] = '';
+      }
+      playTone('pop');
+      renderBlanks();
+    }
+
+    function dragWordBank(e, word) {
+      e.dataTransfer.setData('text/plain', word);
+    }
+
+    function dropWordBank(e, slot) {
+      e.preventDefault();
+      const word = e.dataTransfer.getData('text/plain');
+      if (word === 'cat' || word === 'mat') {
+        blankState[slot] = word;
+        playTone('pop');
+        renderBlanks();
+      }
+    }
+
+    function renderBlanks() {
+      [1, 2].forEach(slot => {
+        const el = document.getElementById(`blank-${slot}-text`);
+        const box = document.getElementById(`blank-${slot}`);
+        box.classList.remove('bg-emerald-50', 'border-emerald-500', 'bg-rose-50', 'border-rose-500');
+        if (blankState[slot]) {
+          el.textContent = blankState[slot];
+          el.className = 'text-blue-700 text-2xl sm:text-3xl font-extrabold animate-pop';
+        } else {
+          el.textContent = '.................';
+          el.className = 'text-slate-300 text-xl sm:text-2xl';
+        }
+      });
+    }
+
+    // =====================================================
+    // 7. CHECK ANSWERS & RESET ALL
+    // =====================================================
+    function checkAllAnswers() {
+      let score = 0;
+
+      // 1. Check Matching (6 points)
+      renderArrows(true);
+      ['sat', 'hat', 'rat', 'cat', 'fat', 'bat'].forEach(word => {
+        const wordEl = document.getElementById(`word-${word}`);
+        wordEl.classList.remove('ring-4', 'ring-emerald-400', 'ring-rose-400');
+        if (connections[word] === word) {
+          score++;
+          wordEl.classList.add('ring-4', 'ring-emerald-400');
+        } else {
+          wordEl.classList.add('ring-4', 'ring-rose-400');
+        }
+      });
+
+      // 2. Check Rearrange (4 points)
+      REARRANGE_ITEMS.forEach(item => {
+        const card = document.getElementById(`rearrange-card-${item.id}`);
+        const formed = rearrangeState[item.id].map(idx => item.letters[idx]).join('');
+        card.classList.remove('ring-4', 'ring-emerald-400', 'ring-rose-400');
+        if (formed === item.target) {
+          score++;
+          card.classList.add('ring-4', 'ring-emerald-400');
+        } else {
+          card.classList.add('ring-4', 'ring-rose-400');
+        }
+      });
+
+      // 3. Check Missing Letters (4 points)
+      MISSING_ITEMS.forEach(item => {
+        const card = document.getElementById(`missing-card-${item.id}`);
+        card.classList.remove('ring-4', 'ring-emerald-400', 'ring-rose-400');
+        const userChar = missingState[item.id].toLowerCase();
+        if (item.accepted.includes(userChar)) {
+          score++;
+          card.classList.add('ring-4', 'ring-emerald-400');
+        } else {
+          card.classList.add('ring-4', 'ring-rose-400');
+        }
+      });
+
+      // 4. Check Fill in the Blank (2 points)
+      const expected = { 1: 'cat', 2: 'mat' };
+      [1, 2].forEach(slot => {
+        const box = document.getElementById(`blank-${slot}`);
+        box.classList.remove('bg-emerald-50', 'border-emerald-500', 'bg-rose-50', 'border-rose-500');
+        if (blankState[slot] === expected[slot]) {
+          score++;
+          box.classList.add('bg-emerald-50', 'border-emerald-500');
+        } else {
+          box.classList.add('bg-rose-50', 'border-rose-500');
+        }
+      });
+
+      // Show Score
+      const scoreBadge = document.getElementById('scoreBadge');
+      const scoreValue = document.getElementById('scoreValue');
+      scoreValue.textContent = score;
+      scoreBadge.classList.remove('hidden');
+
+      playTone('success');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetAll() {
+      clearArrows();
+      document.querySelectorAll('.word-oval').forEach(el => {
+        el.classList.remove('ring-4', 'ring-emerald-400', 'ring-rose-400');
+      });
+
+      rearrangeState = { cat: [], hat: [], fat: [], rat: [] };
+      renderRearrangeSection();
+
+      missingState = { cat: '', mat: '', sat: '', pat: '' };
+      renderMissingSection();
+
+      blankState = { 1: '', 2: '' };
+      renderBlanks();
+
+      document.getElementById('scoreBadge').classList.add('hidden');
+    }
+
+    // Initialize everything on load
+    window.addEventListener('DOMContentLoaded', () => {
+      initMatchSection();
+      renderRearrangeSection();
+      renderMissingSection();
+      document.getElementById('svg-cat-on-mat').innerHTML = ILLUSTRATIONS.catOnMat;
+    });
+  </script>
+</body>
+</html>
